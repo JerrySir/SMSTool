@@ -11,7 +11,7 @@
 				<input type="number" placeholder="手机号" v-model="to" />
 			</view>
 			<view class="box-textarea">
-				<textarea v-model="body" style="flex: 1;" />
+				<textarea v-model="body" style="flex: 1;" @blur="onSaveTemplate()" />
 			</view>
 			<view class="box-btns">
 				<button type="default" @click="onReset()" class="btn-send">重置</button>
@@ -40,6 +40,7 @@
 			}
 		},
 		onLoad() {
+			this.onGetTemplate()
 			this.getHistory()
 		},
 		methods: {
@@ -81,7 +82,13 @@
 			},
 			getHistory() {
 				this.listHistory = uni.getStorageSync('history')
-			}
+			},
+			onSaveTemplate() {
+				uni.setStorageSync('template', this.body)
+			},
+			onGetTemplate() {
+				this.body = uni.getStorageSync('template')
+			},
 		}
 	}
 </script>
